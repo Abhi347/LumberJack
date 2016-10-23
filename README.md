@@ -1,5 +1,7 @@
 [![AUR](https://img.shields.io/aur/license/yaourt.svg?maxAge=2592000)](https://raw.githubusercontent.com/Abhi347/LumberJack/master/LICENSE) 
 [![](https://jitpack.io/v/Abhi347/LumberJack.svg)](https://jitpack.io/#Abhi347/LumberJack)
+[![Build Status](https://travis-ci.org/Abhi347/LumberJack.svg?branch=master)](https://travis-ci.org/Abhi347/LumberJack)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2912b6db60a64009bf780afd2780e52e)](https://www.codacy.com/app/josh-abhi143/LumberJack?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Abhi347/LumberJack&amp;utm_campaign=Badge_Grade)
 
 # LumberJack - Simple Android Logger
 LumberJack is a simple logging library for Android which allows you to send log to Logcat, File System or your server (Coming soon). 
