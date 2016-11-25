@@ -32,7 +32,7 @@ Step 1. Add the JitPack repository to your build file. Add it in your root build
 Step 2. Add the dependency
 
     dependencies {
-	        compile 'com.github.Abhi347:LumberJack:0.0.1'
+	        compile 'com.github.Abhi347:LumberJack:0.0.2'
 	  }
 
 ## Usage
@@ -62,6 +62,12 @@ Or you can choose to disable all logging
 
 ## Advanced Usage
 The default logging is done to Logcat, you can choose to Log in a file. Please note that Logging to server is not implemented yet.
+First you'll have to add the required permissions in your app's `AndroidManifest.xml`
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+The next step is to change the log type in `onCreate()` method of your `MainActivity.java` (Or anywhere you want to change the Log Type)
 
     LumberJack.setLogType(LogType.File);
     
