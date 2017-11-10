@@ -11,36 +11,41 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.lumberjack.MainActivity">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_margin="10dp"
+        android:gravity="center"
         android:text="Log type"
         android:textAppearance="@android:style/TextAppearance.Holo.Medium"
         android:textStyle="bold"/>
-    <RadioGroup
+
+    <LinearLayout
         android:id="@+id/radio_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
-        <RadioButton
+
+        <CheckBox
             android:id="@+id/logcat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:layout_weight="1"
+            android:checked="true"
             android:padding="5dp"
             android:text="Logcat"/>
-        <RadioButton
+
+        <CheckBox
             android:id="@+id/file"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="5dp"
             android:text="File"/>
-        <RadioButton
+
+        <CheckBox
             android:id="@+id/server"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -48,30 +53,33 @@
             android:enabled="false"
             android:padding="5dp"
             android:text="Server"/>
-    </RadioGroup>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_margin="10dp"
+        android:gravity="center"
         android:text="Filter Log Level"
         android:textAppearance="@android:style/TextAppearance.Holo.Medium"
         android:textStyle="bold"/>
+
     <RadioGroup
         android:id="@+id/radio_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
+
         <RadioButton
             android:id="@+id/verbose"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dp"
             android:checked="true"
+            android:padding="5dp"
             android:text="V"/>
+
         <RadioButton
             android:id="@+id/debug"
             android:layout_width="0dp"
@@ -79,6 +87,7 @@
             android:layout_weight="1"
             android:padding="5dp"
             android:text="D"/>
+
         <RadioButton
             android:id="@+id/info"
             android:layout_width="0dp"
@@ -86,6 +95,7 @@
             android:layout_weight="1"
             android:padding="5dp"
             android:text="I"/>
+
         <RadioButton
             android:id="@+id/warning"
             android:layout_width="0dp"
@@ -93,6 +103,7 @@
             android:layout_weight="1"
             android:padding="5dp"
             android:text="W"/>
+
         <RadioButton
             android:id="@+id/error"
             android:layout_width="0dp"
@@ -101,20 +112,23 @@
             android:padding="5dp"
             android:text="E"/>
     </RadioGroup>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_margin="10dp"
+        android:gravity="center"
         android:text="Current Log Message Level"
         android:textAppearance="@android:style/TextAppearance.Holo.Medium"
         android:textStyle="bold"/>
+
     <RadioGroup
         android:id="@+id/radio_log_level"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
+
         <RadioButton
             android:id="@+id/log_verbose"
             android:layout_width="0dp"
@@ -122,14 +136,16 @@
             android:layout_weight="1"
             android:padding="5dp"
             android:text="V"/>
+
         <RadioButton
             android:id="@+id/log_debug"
             android:layout_width="0dp"
-            android:checked="true"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="true"
             android:padding="5dp"
             android:text="D"/>
+
         <RadioButton
             android:id="@+id/log_info"
             android:layout_width="0dp"
@@ -137,6 +153,7 @@
             android:layout_weight="1"
             android:padding="5dp"
             android:text="I"/>
+
         <RadioButton
             android:id="@+id/log_warning"
             android:layout_width="0dp"
@@ -144,6 +161,7 @@
             android:layout_weight="1"
             android:padding="5dp"
             android:text="W"/>
+
         <RadioButton
             android:id="@+id/log_error"
             android:layout_width="0dp"
@@ -152,18 +170,21 @@
             android:padding="5dp"
             android:text="E"/>
     </RadioGroup>
+
     <EditText
         android:id="@+id/tag_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:hint="Enter your tag here"/>
+        android:hint="Enter your tag here"
+        android:maxLines="1"/>
+
     <EditText
         android:id="@+id/message_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:hint="Enter your message here"/>
+        android:hint="Enter your message here"
+        android:maxLines="1"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

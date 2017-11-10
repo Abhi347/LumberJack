@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
@@ -11,10 +12,13 @@ import com.noob.lumberjack.LogLevel;
 import com.noob.lumberjack.LogType;
 import com.noob.lumberjack.LumberJack;
 
+import java.util.ArrayList;
+
 @SuppressWarnings("unused")
 public class MainActivity extends AppCompatActivity {
 
-    private RadioGroup mLogTypeRadioGroup;
+    private CheckBox mLogkatCB, mFileCB, mServerCB;
+
     private RadioGroup mFilterLogLevelRadioGroup;
     private RadioGroup mCurrentLogLevelRadioGroup;
     private EditText mTagEdit;
@@ -24,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mLogTypeRadioGroup = findViewById(R.id.radio_type);
+        mLogkatCB = findViewById(R.id.logcat);
+        mFileCB = findViewById(R.id.file);
+        mServerCB = findViewById(R.id.server);
         mFilterLogLevelRadioGroup = findViewById(R.id.radio_filter);
         mCurrentLogLevelRadioGroup = findViewById(R.id.radio_log_level);
         mTagEdit = findViewById(R.id.tag_edit);
@@ -32,20 +38,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLogClick(View view) {
-        int typeId = mLogTypeRadioGroup.getCheckedRadioButtonId();
-        LogType _logType = LogType.Logcat;
-        LogLevel _filterLogLevel = LogLevel.Debug;
-        switch (typeId) {
-            case R.id.logcat:
-                _logType = LogType.Logcat;
-                break;
-            case R.id.file:
-                _logType = LogType.File;
-                break;
-            case R.id.server:
-                _logType = LogType.Server;
-                break;
+        ArrayList<LogType> _logTypes = new ArrayList<>();
+        if (mLogkatCB.isChecked()) {
+            _logTypes.add(LogType.Logcat);
         }
+        if (mFileCB.isChecked()) {
+            _logTypes.add(LogType.File);
+        }
+        if (mServerCB.isChecked()) {
+            _logTypes.add(LogType.Server);
+        }
+
+        LogLevel _filterLogLevel = LogLevel.Debug;
         int levelId = mFilterLogLevelRadioGroup.getCheckedRadioButtonId();
         switch (levelId) {
             case R.id.verbose:
@@ -77,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         LumberJack.setLogLevel(_filterLogLevel);
-        LumberJack.setLogType(_logType);
+        LumberJack.setLogTypes(_logTypes.toArray(new LogType[]{}));
 
         int logLevelId = mCurrentLogLevelRadioGroup.getCheckedRadioButtonId();
         if (tag.isEmpty()) {
