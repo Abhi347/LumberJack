@@ -11,20 +11,24 @@ import com.noob.lumberjack.LogLevel;
 import com.noob.lumberjack.LogType;
 import com.noob.lumberjack.LumberJack;
 
+@SuppressWarnings("unused")
 public class MainActivity extends AppCompatActivity {
 
-    RadioGroup mLogTypeRadioGroup, mFilterLogLevelRadioGroup, mCurrentLogLevelRadioGroup;
-    EditText mTagEdit, mMessageEdit;
+    private RadioGroup mLogTypeRadioGroup;
+    private RadioGroup mFilterLogLevelRadioGroup;
+    private RadioGroup mCurrentLogLevelRadioGroup;
+    private EditText mTagEdit;
+    private EditText mMessageEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mLogTypeRadioGroup = (RadioGroup) findViewById(R.id.radio_type);
-        mFilterLogLevelRadioGroup = (RadioGroup) findViewById(R.id.radio_filter);
-        mCurrentLogLevelRadioGroup = (RadioGroup) findViewById(R.id.radio_log_level);
-        mTagEdit = (EditText) findViewById(R.id.tag_edit);
-        mMessageEdit = (EditText) findViewById(R.id.message_edit);
+        mLogTypeRadioGroup = findViewById(R.id.radio_type);
+        mFilterLogLevelRadioGroup = findViewById(R.id.radio_filter);
+        mCurrentLogLevelRadioGroup = findViewById(R.id.radio_log_level);
+        mTagEdit = findViewById(R.id.tag_edit);
+        mMessageEdit = findViewById(R.id.message_edit);
     }
 
     public void onLogClick(View view) {

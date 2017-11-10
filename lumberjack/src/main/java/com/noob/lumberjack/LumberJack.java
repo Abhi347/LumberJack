@@ -12,6 +12,7 @@ import java.util.Date;
  * Created by abhi on 23/10/16.
  */
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class LumberJack {
     private static LogLevel mLogLevel = LogLevel.Debug;
     private static LogType mLogType = LogType.Logcat;
@@ -117,6 +118,7 @@ public class LumberJack {
         }
     }
 
+    @SuppressWarnings("unused")
     private static void writeToServer(LogLevel level, String tag, String message) {
         throw new UnsupportedOperationException("Logging to server is not supported yet");
     }

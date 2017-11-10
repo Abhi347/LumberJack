@@ -11,7 +11,7 @@ It's easy to start and ever easier to customise.
  * Logging to Logcat or File system
  * Easy customisation
  * Log only when a specified filter is satisfied
- * Can programatically disable the log
+ * Can programmatically disable the log
 
 ## Planned feature
  * More Customization support
