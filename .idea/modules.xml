@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LumberJack.iml" filepath="$PROJECT_DIR$/LumberJack.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LumberJack.iml" filepath="$PROJECT_DIR$/LumberJack.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lumberjack/lumberjack.iml" filepath="$PROJECT_DIR$/lumberjack/lumberjack.iml" />
       <module fileurl="file://$PROJECT_DIR$/lumberjack/lumberjack.iml" filepath="$PROJECT_DIR$/lumberjack/lumberjack.iml" />
     </modules>
   </component>
