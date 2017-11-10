@@ -4,6 +4,7 @@ package com.noob.lumberjack;
  * Created by abhi on 23/10/16.
  */
 
+@SuppressWarnings("unused")
 public enum LogLevel {
     Verbose(0),
     Debug(1),
@@ -12,7 +13,7 @@ public enum LogLevel {
     Error(4),
     None(100);//None means nothing will log
 
-    private int numLevel;
+    private final int numLevel;
 
     LogLevel(int num) {
         numLevel = num;

@@ -6,9 +6,10 @@ import android.os.Environment;
 import java.io.File;
 
 /**
- * Created by abhi on 23/10/16.
+ * Created by abhi on 23/10/16 for LumberJack.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class FileUtility {
     public static String getLogFilePath(String fileName) {
 
@@ -35,6 +36,7 @@ public class FileUtility {
         return fileName;
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private static String getAbsoluteFilePath(File parentDirectory, String fileName) {
         String path = parentDirectory.getAbsolutePath() + File.separator + "LumberJack" + File.separator + fileName;
         File _file = new File(path);
@@ -52,19 +54,14 @@ public class FileUtility {
     /* Checks if external storage is available for read and write */
     public static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     /* Checks if external storage is available to at least read */
+    @SuppressWarnings("unused")
     public static boolean isExternalStorageReadable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 }
