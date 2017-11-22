@@ -21,7 +21,8 @@ public class LumberJack {
     private static String mDefaultTag = "LumberJack";
     private static String mLogFilePath;
     private static File mLogFile;
-    private static String mLogFileName = "LumberJack.log";
+    private static String mLogFileName = "LumberJack";
+    private static boolean mShouldConcatDate = true;
 
     //region Logging methods
 
@@ -154,7 +155,7 @@ public class LumberJack {
 
     private static void loadFilePath() {
         if (getLogFilePath() == null || getLogFilePath().isEmpty()) {
-            setLogFilePath(FileUtil.getLogFilePath(getLogFileName()));
+            setLogFilePath(FileUtil.getLogFilePath(getLogFileName(), mShouldConcatDate));
         }
     }
 
@@ -208,5 +209,14 @@ public class LumberJack {
     public static void setLogFileName(String logFileNameParam) {
         mLogFileName = logFileNameParam;
     }
+
+    public static boolean isShouldConcatDate() {
+        return mShouldConcatDate;
+    }
+
+    public static void setShouldConcatDate(boolean shouldConcatDate) {
+        mShouldConcatDate = shouldConcatDate;
+    }
+
     //endregion
 }

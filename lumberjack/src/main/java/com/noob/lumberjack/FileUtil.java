@@ -2,6 +2,7 @@ package com.noob.lumberjack;
 
 import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 
@@ -11,7 +12,11 @@ import java.io.File;
 
 @SuppressWarnings("WeakerAccess")
 public class FileUtil {
-    public static String getLogFilePath(String fileName) {
+    /*public static String getLogFilePath(String fileName) {
+        return getLogFilePath(fileName, true);
+    }*/
+
+    public static String getLogFilePath(String fileName, boolean shouldConcatDate) {
 
         if (isExternalStorageWritable()) {
             File _file;
@@ -19,19 +24,19 @@ public class FileUtil {
                 _file = Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_DOCUMENTS);
                 if (exists(_file)) {
-                    return getAbsoluteFilePath(_file, fileName);
+                    return getAbsoluteFilePath(_file, fileName, shouldConcatDate);
                 }
             }
 
             _file = Environment.getExternalStorageDirectory();
             if (exists(_file)) {
-                return getAbsoluteFilePath(_file, fileName);
+                return getAbsoluteFilePath(_file, fileName, shouldConcatDate);
             }
         }
 
         File _file = Environment.getDataDirectory();
         if (exists(_file)) {
-            return getAbsoluteFilePath(_file, fileName);
+            return getAbsoluteFilePath(_file, fileName, shouldConcatDate);
         }
         return fileName;
     }
@@ -59,8 +64,15 @@ public class FileUtil {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private static String getAbsoluteFilePath(File parentDirectory, String fileName) {
-        String path = parentDirectory.getAbsolutePath() + File.separator + "LumberJack" + File.separator + fileName;
+    private static String getAbsoluteFilePath(File parentDirectory, String fileNameWithoutExtension, boolean shouldConcatDate) {
+        String path;
+        if (shouldConcatDate) {
+            String today = DateUtil.getToday();
+            Log.d("Lumber", "today: " + today);
+            path = parentDirectory.getAbsolutePath() + File.separator + "LumberJack" + File.separator + fileNameWithoutExtension + today + ".log";
+        } else {
+            path = parentDirectory.getAbsolutePath() + File.separator + "LumberJack" + File.separator + fileNameWithoutExtension + ".log";
+        }
         File _file = new File(path);
         _file.getParentFile().mkdirs();
         if (exists(_file.getParentFile())) {

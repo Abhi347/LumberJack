@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         mTagEdit = findViewById(R.id.tag_edit);
         mMessageEdit = findViewById(R.id.message_edit);
 
+        mTagEdit.setText("Hello");
+        mMessageEdit.setText("World");
+
         takePermissions();
     }
 
