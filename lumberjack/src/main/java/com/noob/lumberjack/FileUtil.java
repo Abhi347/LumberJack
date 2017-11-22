@@ -10,7 +10,7 @@ import java.io.File;
  */
 
 @SuppressWarnings("WeakerAccess")
-public class FileUtility {
+public class FileUtil {
     public static String getLogFilePath(String fileName) {
 
         if (isExternalStorageWritable()) {
@@ -19,21 +19,43 @@ public class FileUtility {
                 _file = Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_DOCUMENTS);
                 if (exists(_file)) {
-                    return getAbsoluteFilePath(_file,fileName);
+                    return getAbsoluteFilePath(_file, fileName);
                 }
             }
 
             _file = Environment.getExternalStorageDirectory();
             if (exists(_file)) {
-                return getAbsoluteFilePath(_file,fileName);
+                return getAbsoluteFilePath(_file, fileName);
             }
         }
 
         File _file = Environment.getDataDirectory();
         if (exists(_file)) {
-            return getAbsoluteFilePath(_file,fileName);
+            return getAbsoluteFilePath(_file, fileName);
         }
         return fileName;
+    }
+
+    public static File getLogFile(String fileName) {
+
+        if (isExternalStorageWritable()) {
+            File _folder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                _folder = Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_DOCUMENTS);
+            } else {
+                _folder = Environment.getExternalStorageDirectory();
+            }
+            if (exists(_folder)) {
+                return getAbsoluteFile(_folder, fileName);
+            }
+        }
+
+        File _file = Environment.getDataDirectory();
+        if (exists(_file)) {
+            return getAbsoluteFile(_file, fileName);
+        }
+        return _file;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -41,10 +63,23 @@ public class FileUtility {
         String path = parentDirectory.getAbsolutePath() + File.separator + "LumberJack" + File.separator + fileName;
         File _file = new File(path);
         _file.getParentFile().mkdirs();
-        if(exists(_file.getParentFile())){
+        if (exists(_file.getParentFile())) {
             return _file.getAbsolutePath();
         }
         return path;
+    }
+
+    private static File getAbsoluteFile(File parentDirectory, String fileName) {
+        String path = parentDirectory.getAbsolutePath() + File.separator + "LumberJack" + File.separator + fileName;
+        File _file = new File(path);
+        _file.getParentFile().mkdirs();
+        if (exists(_file.getParentFile())) {
+            return _file;
+        }
+        File lumberJackFolder = new File(parentDirectory.getAbsoluteFile(), "LumberJack");
+        lumberJackFolder.mkdirs();
+        _file = new File(lumberJackFolder, fileName);
+        return _file;
     }
 
     private static boolean exists(File file) {

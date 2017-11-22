@@ -7,10 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by abhi on 23/10/16.
@@ -19,11 +17,13 @@ import java.util.List;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class LumberJack {
     private static LogLevel mLogLevel = LogLevel.Debug;
-    //private static LogType[] mLogTypes = {LogType.Logcat};
     private static ArrayList<LogType> mLogTypes = new ArrayList<>();
     private static String mDefaultTag = "LumberJack";
     private static String mLogFilePath;
+    private static File mLogFile;
     private static String mLogFileName = "LumberJack.log";
+
+    //region Logging methods
 
     public static void v(String message) {
         v(mDefaultTag, message);
@@ -65,13 +65,15 @@ public class LumberJack {
         writeLog(LogLevel.Error, tag, message);
     }
 
+    //endregion Logging methods
+
     private static void writeLog(LogLevel level, String tag, String message) {
         if (mLogLevel.getNumLevel() <= level.getNumLevel()) {
             if (mLogTypes.contains(LogType.Logcat)) {
                 writeToLogKat(level, tag, message);
             }
             if (mLogTypes.contains(LogType.File)) {
-                writeToFile(level, tag, message);
+                writeToFileUsingPath(level, tag, message);
             }
             if (mLogTypes.contains(LogType.Server)) {
                 writeToServer(level, tag, message);
@@ -99,7 +101,30 @@ public class LumberJack {
         }
     }
 
-    private static void writeToFile(LogLevel level, String tag, String message) {
+    private static void writeToFileUsingPath(LogLevel level, String tag, String message) {
+        loadFilePath();
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+
+        String writableText = currentDateTimeString + "\t" + level.toString() + "\t" + tag + "\t" + message + "\n";
+        FileOutputStream stream = null;
+        try {
+            File _file = new File(getLogFilePath());
+            stream = new FileOutputStream(_file, true);
+            stream.write(writableText.getBytes());
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException eParam) {
+                    eParam.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void writeToFileUsingFile(LogLevel level, String tag, String message) {
         loadFilePath();
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
@@ -129,7 +154,7 @@ public class LumberJack {
 
     private static void loadFilePath() {
         if (getLogFilePath() == null || getLogFilePath().isEmpty()) {
-            setLogFilePath(FileUtility.getLogFilePath(getLogFileName()));
+            setLogFilePath(FileUtil.getLogFilePath(getLogFileName()));
         }
     }
 

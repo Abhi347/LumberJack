@@ -1,12 +1,18 @@
 package com.example.lumberjack;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.noob.lumberjack.LogLevel;
 import com.noob.lumberjack.LogType;
@@ -17,6 +23,7 @@ import java.util.ArrayList;
 @SuppressWarnings("unused")
 public class MainActivity extends AppCompatActivity {
 
+    private static final int MY_PERMISSIONS_REQUEST_FILE_WRITE = 1337;
     private CheckBox mLogkatCB, mFileCB, mServerCB;
 
     private RadioGroup mFilterLogLevelRadioGroup;
@@ -35,6 +42,80 @@ public class MainActivity extends AppCompatActivity {
         mCurrentLogLevelRadioGroup = findViewById(R.id.radio_log_level);
         mTagEdit = findViewById(R.id.tag_edit);
         mMessageEdit = findViewById(R.id.message_edit);
+
+        takePermissions();
+    }
+
+    private void takePermissions() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+                new AlertDialog.Builder(this)
+                        .setTitle("File Access Permission required")
+                        .setMessage("Please allow the app to access your external storage for the log files to be saved. " +
+                                "If you're not using the log-type as file, you can ignore this")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                takePermissions();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(MainActivity.this, "External storage access permission denied", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .create()
+                        .show();
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_FILE_WRITE);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_FILE_WRITE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay!
+                    Toast.makeText(this, "File access permission granted", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(this, "File access permission denied", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 
     public void onLogClick(View view) {
