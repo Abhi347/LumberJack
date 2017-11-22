@@ -14,9 +14,9 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.noob.lumberjack.LJ;
 import com.noob.lumberjack.LogLevel;
 import com.noob.lumberjack.LogType;
-import com.noob.lumberjack.LumberJack;
 
 import java.util.ArrayList;
 
@@ -164,44 +164,44 @@ public class MainActivity extends AppCompatActivity {
                     .show();
             return;
         }
-        LumberJack.setLogLevel(_filterLogLevel);
-        LumberJack.setLogTypes(_logTypes.toArray(new LogType[]{}));
+        LJ.setLogLevel(_filterLogLevel);
+        LJ.setLogTypes(_logTypes.toArray(new LogType[]{}));
 
         int logLevelId = mCurrentLogLevelRadioGroup.getCheckedRadioButtonId();
         if (tag.isEmpty()) {
             switch (logLevelId) {
                 case R.id.log_verbose:
-                    LumberJack.v(message);
+                    LJ.v(message);
                     break;
                 case R.id.log_debug:
-                    LumberJack.d(message);
+                    LJ.d(message);
                     break;
                 case R.id.log_info:
-                    LumberJack.i(message);
+                    LJ.i(message);
                     break;
                 case R.id.log_warning:
-                    LumberJack.w(message);
+                    LJ.w(message);
                     break;
                 case R.id.log_error:
-                    LumberJack.e(message);
+                    LJ.e(message);
                     break;
             }
         } else {
             switch (logLevelId) {
                 case R.id.log_verbose:
-                    LumberJack.v(tag, message);
+                    LJ.v(tag, message);
                     break;
                 case R.id.log_debug:
-                    LumberJack.d(tag, message);
+                    LJ.d(tag, message);
                     break;
                 case R.id.log_info:
-                    LumberJack.i(tag, message);
+                    LJ.i(tag, message);
                     break;
                 case R.id.log_warning:
-                    LumberJack.w(tag, message);
+                    LJ.w(tag, message);
                     break;
                 case R.id.log_error:
-                    LumberJack.e(tag, message);
+                    LJ.e(tag, message);
                     break;
             }
         }
