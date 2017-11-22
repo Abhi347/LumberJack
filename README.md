@@ -8,7 +8,7 @@ LumberJack is a simple logging library for Android which allows you to send log 
 It's easy to start and ever easier to customise.
 
 ## Features
- * Logging to Logcat or File system
+ * Logging to Logcat or File system or both
  * Easy customisation
  * Log only when a specified filter is satisfied
  * Can programmatically disable the log
@@ -32,7 +32,7 @@ Step 1. Add the JitPack repository to your build file. Add it in your root build
 Step 2. Add the dependency
 
     dependencies {
-	        compile 'com.github.Abhi347:LumberJack:0.0.3'
+	        compile 'com.github.Abhi347:LumberJack:0.1.0'
 	  }
 
 ## Usage
@@ -44,18 +44,26 @@ Just use it as you are using Log class. For eg. instead of calling `Log.d()`, ca
     LumberJack.w(tag, message);
     LumberJack.e(tag, message);
     
+Starting from 0.1.0 instead of `LumberJack`, you can also use `LJ` class as an alias. This can be done with all the LumberJack methods.
+
+    LJ.v(tag, message);
+    LJ.d(tag, message);
+    LJ.i(tag, message);
+    LJ.w(tag, message);
+    LJ.e(tag, message);
+
 You can choose to skip the tag. When you do that a default tag is chosen. The current default tag is `LumberJack`.
 
-    LumberJack.v(message);
-    LumberJack.d(message);
-    LumberJack.i(message);
-    LumberJack.w(message);
-    LumberJack.e(message);
+    LumberJack.v(message); //or LJ.v(message)
+    LumberJack.d(message); //or LJ.d(message)
+    LumberJack.i(message); //or LJ.i(message)
+    LumberJack.w(message); //or LJ.w(message)
+    LumberJack.e(message); //or LJ.e(message)
 
-You can set Log Filtering by choosing the required Log Level - 
+You can set Log Filtering by choosing the required Log Level -
 
     LumberJack.setLogLevel(LogLevel.Info);
-   
+
 Or you can choose to disable all logging
 
     LumberJack.setLogLevel(LogLevel.None);
@@ -67,11 +75,17 @@ First you'll have to add the required permissions in your app's `AndroidManifest
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
+From Android 6.0 (API level 23), you'll also need to get [Runtime Permissions](https://developer.android.com/training/permissions/requesting.html) for `WRITE_EXTERNAL_STORAGE` permission.
+
 The next step is to change the log type in `onCreate()` method of your `MainActivity.java` (Or anywhere you want to change the Log Type)
 
     LumberJack.setLogType(LogType.File);
-    
-Although a default file path will be chosen in your External Storage, Public Document Directory or your SD card, depending upon which version of Android you're running; it's entirely possible to change the path or just the name of the logging file.
+
+Or if you want to have multiple LogType, you can pass an array.
+
+    LumberJack.setLogTypes(new LogType[]{LogType.Logcat, LogType.File});
+
+Although a default file path will be chosen in your External Storage, Public Document Directory or your SD card, depending upon which version of Android you're running; it's entirely possible to change the path or just the name of the logging file. (Provided that you have permissions to write at that path).
 
     LumberJack.setLogFilePath(fullFilePathIncludingFileNameAndExtension);
 
