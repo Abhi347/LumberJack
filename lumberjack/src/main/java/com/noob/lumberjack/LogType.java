@@ -7,5 +7,6 @@ package com.noob.lumberjack;
 public enum LogType {
     Logcat,
     File,
-    Server //Not Supported Yet
+    Server, //Not Supported Yet
+    Email
 }

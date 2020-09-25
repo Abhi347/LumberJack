@@ -1,5 +1,7 @@
 package com.noob.lumberjack;
 
+import android.app.Activity;
+
 /**
  * Created by abhi on 23/10/16.
  */
@@ -103,6 +105,12 @@ public class LumberJack {
 
     public static void setShouldConcatDate(boolean shouldConcatDate) {
         Logger.getInstance().setShouldConcatDate(shouldConcatDate);
+    }
+
+    public static void exportLogsToEmail(Activity activity){
+        if(activity != null && !activity.isFinishing()) {
+            Logger.getInstance().exportLogsToEmail(activity);
+        }
     }
 
     //endregion Accessors

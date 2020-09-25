@@ -2,6 +2,7 @@ package com.example.lumberjack;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_FILE_WRITE = 1337;
-    private CheckBox mLogkatCB, mFileCB, mServerCB;
+    private CheckBox mLogkatCB, mFileCB, mServerCB,mEmailCB;
 
     private RadioGroup mFilterLogLevelRadioGroup;
     private RadioGroup mCurrentLogLevelRadioGroup;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         mLogkatCB = findViewById(R.id.logcat);
         mFileCB = findViewById(R.id.file);
         mServerCB = findViewById(R.id.server);
+        mEmailCB = findViewById(R.id.email);
+
         mFilterLogLevelRadioGroup = findViewById(R.id.radio_filter);
         mCurrentLogLevelRadioGroup = findViewById(R.id.radio_log_level);
         mTagEdit = findViewById(R.id.tag_edit);
@@ -132,7 +135,9 @@ public class MainActivity extends AppCompatActivity {
         if (mServerCB.isChecked()) {
             _logTypes.add(LogType.Server);
         }
-
+        if(mEmailCB.isChecked()){
+            _logTypes.add(LogType.Email);
+        }
         LogLevel _filterLogLevel = LogLevel.Debug;
         int levelId = mFilterLogLevelRadioGroup.getCheckedRadioButtonId();
         switch (levelId) {
@@ -206,5 +211,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    /**
+     * click listener for Email button
+     * @param view view
+     */
+    public void onEmailClick(View view){
+        try {
+            LJ.exportLogsToEmail(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
