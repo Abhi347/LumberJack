@@ -1,6 +1,11 @@
 package com.noob.lumberjack;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,6 +21,7 @@ import java.util.Date;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class Logger {
+
     //region Singleton
     private static Logger _instance;
 
@@ -87,7 +93,7 @@ public class Logger {
             if (mLogTypes.contains(LogType.Logcat)) {
                 writeToLogKat(level, tag, message);
             }
-            if (mLogTypes.contains(LogType.File)) {
+            if (mLogTypes.contains(LogType.File) || mLogTypes.contains(LogType.Email)) {
                 writeToFileUsingPath(level, tag, message);
             }
             if (mLogTypes.contains(LogType.Server)) {
@@ -165,6 +171,32 @@ public class Logger {
     @SuppressWarnings("unused")
     private void writeToServer(LogLevel level, String tag, String message) {
         throw new UnsupportedOperationException("Logging to server is not supported yet");
+    }
+
+    public void exportLogsToEmail(Activity activity) {
+        loadFilePath();
+        File _file = new File(getLogFilePath()); // getting log file from storage
+        launchEmailClient(activity,_file); // launching email client
+    }
+
+    private void launchEmailClient(Activity activity, File file) {
+        try {
+            if(activity == null){
+                return;
+            }
+            Uri path = FileProvider.getUriForFile(activity,
+                    activity.getPackageName(), file); // identifying the URI of the file path
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("vnd.android.cursor.dir/email");
+            intent.putExtra(Intent.EXTRA_STREAM, path);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            activity.startActivity(Intent.createChooser(intent, "Choose an Email client :"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(activity, "Something went wrong, please try again", Toast.LENGTH_LONG)
+                    .show();
+        }
     }
 
     private void loadFilePath() {
